@@ -1,7 +1,7 @@
 <footer>
 	<div class="container">
-		<p>Des questions ? Appelez le 0800 917 813</p>
-		<a href="#">Conditions des cartes cadeaux</a>
+		<p>Mon mail est "adil.mektoub@gmail com"</p>
+		<a href="#">Mes Réseau sociau</a>
 		<a href="#">Conditions d'utilisation</a>
 		<a href="#">Déclaration de confidentialité</a>
 	</div>

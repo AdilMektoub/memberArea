@@ -1,11 +1,15 @@
 <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "user"
 
-	session_start(); // INITIALISE LA SESSION
-	session_unset(); // DESACTIVE LA SESSION
-	session_destroy(); // DETRUIT LA SESSION
-	setcookie('auth', '', time()-1, '/', null, false, true); // DETRUIT LE COOKIE
-
-	header('location: index.php');
-	exit();
-
+try {
+  $conn = new PDO("mysql:host=$servername;dbname=$dbname, $username, $password);
+  // set the PDO error mode to exception
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  echo "Connected successfully";
+} catch(PDOException $e) {
+  echo "Connection failed: " . $e->getMessage();
+}
 ?>

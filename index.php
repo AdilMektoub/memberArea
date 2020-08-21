@@ -4,15 +4,18 @@
 
 	require('src/log.php');
 
-	if(!empty($_POST['email']) && !empty($_POST['password'])){
+//C'est pour VERIFIER la variable email et password 
+	if(!empty($_POST['nom']) && !empty($_POST['prenom']) && !empty($_POST['email']) && !empty($_POST['password'])){
 
 		require('src/connect.php');
 
-		// VARIABLES
+		// VARIABLES 
+		$nom 			= htmlspecialchars($_POST['nom']);
+		$prenom 		= htmlspecialchars($_POST['prenom']);
 		$email 			= htmlspecialchars($_POST['email']);
 		$password		= htmlspecialchars($_POST['password']);
 
-		// ADRESSE EMAIL SYNTAXE
+		// ADRESSE EMAIL SYNTAXE si il existe pas "!" le mail
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 			header('location: index.php?error=1&message=Votre adresse email est invalide.');
@@ -20,7 +23,7 @@
 
 		}
 
-		// CHIFFRAGE DU MOT DE PASSE
+		// CHIFFRAGE DU MOT DE PASSE avec sha fonction de hachage pour hacher le mot de passe
 		$password = "aq1".sha1($password."123")."25";
 
 		// EMAIL DEJA UTILISE
@@ -34,7 +37,7 @@
 			}
 		}
 
-		// CONNEXION
+		// CONNEXION à la BDD
 		$req = $db->prepare("SELECT * FROM user WHERE email = ?");
 		$req->execute(array($email));
 
@@ -65,11 +68,13 @@
 	}
 
 ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Netflix</title>
+	<title>Formulaire de contact Adil</title>
 	<link rel="stylesheet" type="text/css" href="design/default.css">
 	<link rel="icon" type="image/pngn" href="img/favicon.png">
 </head>
@@ -91,7 +96,7 @@
 					<small><a href="logout.php">Déconnexion</a></small>
 
 				<?php } else { ?>
-					<h1>S'identifier</h1>
+					<h1>Formulaire de Contact</h1>
 
 					<?php if(isset($_GET['error'])) {
 
@@ -100,16 +105,19 @@
 						}
 
 					} ?>
-
+					<!-- je ne comprend pas le css ne s'applique pas sur mon NOM et PRENOM alors que mon HTML est lié a mon "default.css"  -->
+					<!-- j'ai remplacé id par placeholder car  -->
 					<form method="post" action="index.php">
 						<input type="email" name="email" placeholder="Votre adresse email" required />
+						<input type="text" name="nom" placeholder="nom" required />
+						<input type="text" name="prenom" placeholder="prenom" required />
 						<input type="password" name="password" placeholder="Mot de passe" required />
-						<button type="submit">S'identifier</button>
+						<button type="submit">Envoyer</button>
 						<label id="option"><input type="checkbox" name="auto" checked />Se souvenir de moi</label>
 					</form>
 				
 
-					<p class="grey">Première visite sur Netflix ? <a href="inscription.php">Inscrivez-vous</a>.</p>
+					<p class="grey">Première visite chez Adil ? <a href="inscription.php">Inscrivez-vous</a>.</p>
 				<?php } ?>
 		</div>
 	</section>
